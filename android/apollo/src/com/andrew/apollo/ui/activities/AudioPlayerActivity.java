@@ -15,11 +15,20 @@ import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.media.audiofx.AudioEffect;
 import android.net.Uri;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.Albums;
 import android.provider.MediaStore.Audio.Artists;
@@ -27,12 +36,22 @@ import android.provider.MediaStore.Audio.Playlists;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.*;
+import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
-import android.widget.*;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+
 import com.andrew.apollo.IApolloService;
 import com.andrew.apollo.MusicPlaybackService;
 import com.andrew.apollo.adapters.PagerAdapter;
@@ -54,6 +73,7 @@ import com.frostwire.android.gui.adapters.menu.AddToPlaylistMenuAction;
 import com.frostwire.android.gui.services.Engine;
 import com.frostwire.android.gui.util.WriteSettingsPermissionActivityHelper;
 import com.frostwire.android.gui.views.SwipeLayout;
+import com.frostwire.android.offers.Offers;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 
@@ -198,6 +218,8 @@ public class AudioPlayerActivity extends FragmentActivity implements
             }
         });
 
+        initRemoveAds();
+
         // Set the layout
         setContentView(R.layout.activity_player_base);
 
@@ -212,6 +234,14 @@ public class AudioPlayerActivity extends FragmentActivity implements
         findViewById(R.id.audio_player_album_art).setOnTouchListener(gestureListener);
 
         writeSettingsHelper = new WriteSettingsPermissionActivityHelper(this);
+    }
+
+
+
+    private void initRemoveAds() {
+        if (Offers.removeAdsOffersEnabled()) {
+
+        }
     }
 
     /**
